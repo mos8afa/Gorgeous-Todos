@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
+    
 class ToDo(models.Model):
     name = models.CharField(verbose_name='ToDo',max_length=500)
     created_at = models.DateTimeField(verbose_name='Created At',default=timezone.now)
@@ -11,15 +11,3 @@ class ToDo(models.Model):
     def __str__(self):
         return self.name
 
-    class ToDoManager(models.Manager):
-        def for_user(self, user):
-            return self.filter(user=user)
-
-        def by_name(self, name):
-            return self.filter(name=name)
-
-        def by_date(self, date):
-            return self.filter(created_at__date=date)
-
-        def by_status(self, done):
-            return self.filter(is_done=done)
