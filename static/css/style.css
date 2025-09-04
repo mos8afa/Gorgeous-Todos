@@ -1,0 +1,16 @@
+ :root{--bg:#f6f8fa;--card:#ffffff;--muted:#7a7f86;--primary:#2563eb; /* calm blue */
+ }
+ body.bg-soft{ background: linear-gradient(180deg, #fbfdff 0%, #f6f8fa 100%);
+ color:#222 }
+ .navbar .brand-mark{ width:44px; height:44px; display:flex; align-items:center;
+ justify-content:center; background:linear-gradient(135deg,#fff3cd,#ffe6a7);
+ border-radius:10px; font-size:20px }
+ .brand-name{ font-weight:600 }
+ .card, .list-group-item{ border-radius:12px }
+ .list-group-item{ background: linear-gradient(180deg, rgba(255,255,255,0.95),
+ rgba(250,250,252,0.95)); border:1px solid rgba(30,41,59,0.04) }
+ .btn-primary{ background-color:var(--primary); border-color:var(--primary) }
+ /* completed todo style */
+ .text-decoration-line-through{ opacity:0.6 }
+ /* small screens spacing */
+ @media (max-width:576px){ .navbar .brand-name{ font-size:14px } }
