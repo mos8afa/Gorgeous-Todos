@@ -10,7 +10,7 @@
             </div>
             <div class="btn-group ms-3">
                  <a href="/" class="btn btn-sm btn-outline-secondary">Edit</a>
-                    <a href="/" class="btn btn-sm btn-outline-danger">Delete</a>
+                    <a href="{% url 'todo:delete_todo' todo.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
             </div>
         </div>
     </div>

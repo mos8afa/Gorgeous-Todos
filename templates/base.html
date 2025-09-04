@@ -31,7 +31,7 @@
                                                         <li class="nav-item dropdown ms-3">
                                                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">{{ user.username }}</a>
                                                                       <ul class="dropdown-menu dropdown-menu-end">
-                                                                             <li><a class="dropdown-item" href="#">Profile</a></li>
+                                                                             <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
                                                                                     <li><hr class="dropdown-divider"></li>
                                                                                            <li><a class="dropdown-item text-danger" href="/">Logout</a></li>
                                                                       </ul>
