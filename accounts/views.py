@@ -10,8 +10,6 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_str, force_bytes
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.contrib import messages
-from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 
 @permission_classes([IsAuthenticated])
@@ -61,8 +59,7 @@ def signup(request):
             message = f"Hi {user.username},\n\nPlease click the link below to activate your account:\n{activation_link}\n\nIf this email isn't yours, please ignore this message."
 
             send_mail(mail_subject, message, None, [user.email], fail_silently=False)
-            
-            messages.success(request, 'Please confirm your email to complete registration.')
+        
             return render(request, 'registration/confirm_email.html')
         
     else:

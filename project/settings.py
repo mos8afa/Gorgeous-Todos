@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_summernote',  
+    'rest_framework',
 ]
 
 LOGIN_REDIRECT_URL = '/accounts/edit/'
@@ -144,3 +145,10 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'imos8afa@gmail.com'
 EMAIL_HOST_PASSWORD = 'ozlr vmos qhmj xxew'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}

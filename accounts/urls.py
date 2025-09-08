@@ -1,5 +1,7 @@
 from django.urls import path
 from .views import profile,edit_profile,signup,activate
+from .api_view import ProfileApi
+
 
 app_name = 'accounts'
 
@@ -8,4 +10,6 @@ urlpatterns = [
     path('edit/',edit_profile,name='edit_profile'),
     path('signup/',signup,name='signup'),
     path('activate/<uidb64>/<token>/', activate, name='activate'),
+
+    path('profile/api/',ProfileApi.as_view(),name='profile_api'),
 ]
