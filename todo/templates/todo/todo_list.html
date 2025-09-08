@@ -23,7 +23,6 @@
                 <div class="card shadow-sm p-4 text-center">
                     <h5 class="mb-2">No todos yet</h5>
                         <p class="text-muted">Click <strong>+ Add Todo</strong> to create your first task.</p>
-                            <button class="btn btn-outline-primary" data-bs-toggle="modal" databs-target="#addTodoModal">Add Todo</button>
                 </div>
             {% endif %}
         {% else %}
@@ -38,7 +37,7 @@
 <div class="modal fade" id="addTodoModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form method="post" id="todoForm" action="/">
+            <form method="post" id="todoForm" action="{% url 'todo:todo_list' %}">
                 {% csrf_token %}
                     <div class="modal-header">
                         <h5 class="modal-title">Add Todo</h5>
@@ -47,7 +46,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Text</label>
-                            <textarea name="text" class="form-control" rows="3" required></textarea>
+                            {{form}}
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -58,4 +57,95 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="editTodoModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form method="post" id="editTodoForm">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Todo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Text</label>
+            <input type="text" name="name" id="editTodoInput" class="form-control" placeholder="Enter todo text...">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-link" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 {% endblock %}
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const checkboxes = document.querySelectorAll(".todo-toggle");
+
+    checkboxes.forEach(cb => {
+        cb.addEventListener("change", function() {
+            const todoId = this.dataset.id;
+
+            fetch(`/check/${todoId}/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"), 
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const todoName = this.closest(".list-group-item").querySelector("h6");
+                    if (data.is_done) {
+                        todoName.classList.add("text-decoration-line-through", "text-muted");
+                    } else {
+                        todoName.classList.remove("text-decoration-line-through", "text-muted");
+                    }
+                }
+            });
+        });
+    });
+
+    // helper function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+document.addEventListener("DOMContentLoaded", function () {
+    // لما يدوس على Edit
+    const editButtons = document.querySelectorAll(".edit-btn");
+    const editInput = document.getElementById("editTodoInput");
+    const editForm = document.getElementById("editTodoForm");
+
+    let currentId = null;
+
+    editButtons.forEach(btn => {
+        btn.addEventListener("click", function () {
+            currentId = this.dataset.id;
+            editInput.value = this.dataset.name; // نحط الاسم القديم في input
+            editForm.action = `/edit/${currentId}/`; // نخلي الفورم يضرب على اللينك الصح
+        });
+    });
+});
+
+</script>
+
+{% endblock extra_js %}

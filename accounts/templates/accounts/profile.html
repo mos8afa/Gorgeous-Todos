@@ -28,8 +28,11 @@
             </ul>
 
             <div class="d-flex justify-content-between">
-                <a href="/" class="btn btn-outline-primary">Edit Profile</a>
-                <a href="/" class="btn btn-danger">Logout</a>
+                <a href="{% url 'accounts:edit_profile' %}" class="btn btn-outline-primary">Edit Profile</a>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
             </div>
         </div>
     </div>

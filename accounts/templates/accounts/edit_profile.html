@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-lg p-4 rounded-3">
+    <h2 class="mb-4 text-center">Edit Profile</h2>
+
+    {% if profile_form.instance.image %}
+      <div class="text-center mb-3">
+        <img src="{{ profile_form.instance.image.url }}" 
+             class="rounded-circle border shadow-sm profile-pic" 
+             alt="Profile Picture">
+      </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" 
+                 name="{{ user_form.username.name }}" 
+                 value="{{ user_form.initial.username }}">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" 
+                 name="{{ user_form.email.name }}" 
+                 value="{{ user_form.initial.email }}">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-control" 
+                 name="{{ user_form.first_name.name }}" 
+                 value="{{ user_form.initial.first_name }}">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-control" 
+                 name="{{ user_form.last_name.name }}" 
+                 value="{{ user_form.initial.last_name }}">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Phone</label>
+          <input type="text" class="form-control" 
+                 name="{{ profile_form.phone.name }}" 
+                 value="{{ profile_form.initial.phone }}">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Profile Picture</label>
+          <input type="file" class="form-control" 
+                 name="{{ profile_form.image.name }}">
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+  .profile-pic {
+    width: 120px;
+    height: 120px;
+    object-fit: cover; 
+  }
+</style>
+{% endblock %}

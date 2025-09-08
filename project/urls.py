@@ -18,12 +18,16 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.authtoken import views
 
 urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/',include('accounts.urls', namespace = 'accounts')), 
     path('admin/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),
-    path('todo_list/',include('todo.urls')),
-    path('profile',include('accounts.urls'))
+    path('',include('todo.urls')),
+    path('api-token-auth/', views.obtain_auth_token),
+    
 ]
 
 

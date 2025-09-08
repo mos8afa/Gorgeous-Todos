@@ -31,16 +31,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'todo',
+    'accounts',
     'django.contrib.auth',
+    'django.contrib.admin',
+    'rest_framework.authtoken',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
-    'todo',
-    'django_summernote',
+    'django_summernote',  
 ]
+
+LOGIN_REDIRECT_URL = '/accounts/edit/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware', 
+    'django.contrib.auth.middleware.AuthenticationMiddleware', 
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -131,3 +136,11 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'imos8afa@gmail.com'
+EMAIL_HOST_PASSWORD = 'ozlr vmos qhmj xxew'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
